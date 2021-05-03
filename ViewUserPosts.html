@@ -1,0 +1,39 @@
+<?php 
+  $mysqli = new mysqli("mysql.eecs.ku.edu", "tanishkashah", "eeH3fahn", "tanishkashah");
+
+  if($mysqli->connect_errno){
+  printf("Connect failed: %s\n", $mysql->connect_errno);
+  exit();
+  }
+?>
+
+<!DOCTYPE html>
+  <head>
+    <title>View User Posts</title>
+    <link rel='stylesheet' type='text/css' href='style.css'>
+  </head>
+
+  <body>
+    <p style="font-size: 40px;">View user posts</p>
+    <form action="./ViewUserPosts.php" method="post">
+      Select a user:
+      <select name="Users">
+
+        <?php 
+          $query = "SELECT * from users";
+          if($result = $mysqli->query($query)){
+            while($users = $result->fetch_assoc()){
+              $user = $users["user_id"];
+              echo "<option value='$user'>$user</option>";
+            }
+          }
+          
+          $mysqli->close();
+        ?>
+       
+      </select><br>
+      <button type="submit">View Posts
+    </form>
+
+  </body>
+</html>
